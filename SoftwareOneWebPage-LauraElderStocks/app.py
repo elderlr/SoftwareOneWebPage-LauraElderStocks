@@ -118,7 +118,6 @@ def searchPage(name):
         j = count - 1
         for j in working["yf"]:
             today_data = j['Close']
-            print(today_data)
     price = today_data
     # get the last three days of data
 
