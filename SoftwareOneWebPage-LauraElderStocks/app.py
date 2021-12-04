@@ -80,7 +80,6 @@ def display_quote():
 def pattern_returnPage():
     pattern_pass = "Hammer"
     signal = "Buy"
-    #image = "https://en.wikipedia.org/wiki/Hammer_(candlestick_pattern)#/media/File:Hammer_pattern_03.jpg"
     #call Elain's service
     user_query = 'Hammer_(candlestick_pattern)'
     location = 'C:\\Users\\Laura\\source\\repos\\SoftwareOneWebPage-LauraElderStocks\\search_results.json'
@@ -101,7 +100,6 @@ def pattern_returnPage():
 def pattern_returnPageI():
     pattern_pass = "Inverse Hammer/ Inverted Hammer"
     signal = "Buy"
-    image = "https://hitandruncandlesticks.com/wp-content/uploads/2014/11/Inverted-Hammer-Sample-1.png"
     #call Elain's service
     user_query = 'Inverted_hammer'
     location = 'C:\\Users\\Laura\\source\\repos\\SoftwareOneWebPage-LauraElderStocks\\search_results.json'
@@ -116,13 +114,12 @@ def pattern_returnPageI():
     information = data['summary'] #this has changed
     # Closing file
     f.close()
-    return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information, image=image)
+    return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information)
 
 @app.route('/Morning')
 def pattern_returnPageM():
     pattern_pass = "Morning Star"
     signal = "Buy"
-    image="https://cdn.howtotradeblog.com/wp-content/uploads/2020/06/01224309/structure-of-a-morning-star-pattern.jpg"
     #call Elain's service
     user_query = 'Morning_star_(candlestick_pattern)'
     location = 'C:\\Users\\Laura\\source\\repos\\SoftwareOneWebPage-LauraElderStocks\\search_results.json'
@@ -137,13 +134,12 @@ def pattern_returnPageM():
     information = data['summary'] #this has changed
     # Closing file
     f.close()
-    return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information, image=image)
+    return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information)
 
 @app.route('/White')
 def pattern_returnPageW():
     pattern_pass = "Three White Soldiers"
     signal = "Buy"
-    image=str("https://a.c-dn.net/c/content/dam/publicsites/igcom/uk/images/content-2-chart-images/three-white-soldiers.png")
     #call Elain's service
     user_query = 'Three_white_soldiers'
     location = 'C:\\Users\\Laura\\source\\repos\\SoftwareOneWebPage-LauraElderStocks\\search_results.json'
@@ -158,13 +154,12 @@ def pattern_returnPageW():
     information = data['summary'] #this has changed
     # Closing file
     f.close()
-    return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information, image=image)
+    return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information)
 
 @app.route('/Hanging')
 def pattern_returnPageH():
     pattern_pass = "Hanging Man"
     signal = "Sell"
-    image="https://www.forexboat.com/wp-content/uploads/2020/02/Hanging-Man-Candlestick-Pattern-Summary.jpg"
     #call Elain's service
     user_query = 'Hanging_man_(candlestick_pattern)'
     location = 'C:\\Users\\Laura\\source\\repos\\SoftwareOneWebPage-LauraElderStocks\\search_results.json'
@@ -179,13 +174,12 @@ def pattern_returnPageH():
     information = data['summary'] #this has changed
     # Closing file
     f.close()
-    return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information, image=image)
+    return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information)
 
 @app.route('/Crow')
 def pattern_returnPageCRO():
     pattern_pass = "Three Black Crows"
     signal = "Sell"
-    image="https://www.brameshtechanalysis.com/wp-content/uploads/2010/12/three_black_crows.png"
     #call Elain's service
     user_query = 'Three_black_crows'
     location = 'C:\\Users\\Laura\\source\\repos\\SoftwareOneWebPage-LauraElderStocks\\search_results.json'
@@ -200,7 +194,7 @@ def pattern_returnPageCRO():
     information = data['summary'] #this has changed
     # Closing file
     f.close()
-    return render_template('pn.html', patternZ = pattern_pass, signal=signal, image=image, information=information)
+    return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information)
 
 
 if __name__ == '__main__':
