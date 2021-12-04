@@ -54,21 +54,94 @@ def entry():
 
 @app.route('/search/<name>')
 def searchPage(name):
-   symbol = request.args.get(name, default="BTC-USD")
-   period = request.args.get('period', default="1mo")
-   interval = request.args.get('interval', default="1d")        
-   quote = yf.Ticker(symbol)   
-   hist = quote.history(period=period, interval=interval)
-   data = hist.to_json()
-   filename ='C:\\Users\\Laura\\source\\repos\\SoftwareOneWebPage-LauraElderStocks\\stocks.json'
-   with open(filename,'w') as file_object:
-    json.dump(data,file_object)
-    price = '100.00'#change this Laura
+    filename ='C:\\Users\\Laura\\source\\repos\\SoftwareOneWebPage-LauraElderStocks\\stocks.json'
+    #with open(filename,'w') as file_object:
+     #   json.dump(data,file_object)
+    temp = {"yf":[]}
+    with open(filename, "w") as outfile:
+        json.dump(temp, outfile)
+    outfile.close()
+    #get the item we are searching for
+    symbol = request.args.get(name, default="BTC-USD")
+    period = request.args.get('period', default="1wk")
+    interval = request.args.get('interval', default="1d") 
+    quote = yf.Ticker(symbol)   
+    hist = quote.history(period=period, interval=interval)
+    hist = hist.reset_index()
+#build the various arrays
+    d = []
+    o = []
+    h = []
+    l = []
+    c = [] 
+    count = 0
+    day = 0
+    month = 0
+    year = 0
+    date_var = ""
+    for j in hist['Date']:
+        #count the number of dates
+        count = count + 1
+        day = j.day
+        month = j.month
+        year = j.year
+        date_var = str(month)+"/"+str(day)+"/"+str(year)
+        d.append(date_var)
+    for j in hist['Open']:
+        o.append(j)
+    for j in hist['High']:
+        h.append(j)
+    for j in hist['Low']:
+        l.append(j)
+    for j in hist['Close']:
+        c.append(j)
+    # insert data into the Json filename
+    for i in range(count):
+        Date = d[i]
+        Open = o[i]
+        High = h[i]
+        Low = l[i]
+        Close = c[i]
+        data = {'Date':Date,'Open':Open,'High':High,'Low':Low,'Close':Close}
+        with open(filename,'r+') as file:
+              # First we load existing data into a dict.
+            file_data = json.load(file)
+            # Join new_data with file_data inside emp_details
+            file_data["yf"].append(data)
+            # Sets file's current position at offset.
+            file.seek(0)
+            # convert back to json.
+            json.dump(file_data, file, indent = 4)
+    #go through the json file and get out the price
+    with open(filename,"r") as file:
+        working = json.load(file)
+        j = count - 1
+        for j in working["yf"]:
+            today_data = j['Close']
+            print(today_data)
+    price = today_data
+    # get the last three days of data
+
+    #calculate the pattern and establish the action
     action = "Buy"#change this Laura
     pattern="Hammer"#change this Laura
-   return render_template('analysis.html', name =name, price = price, action= action, pattern=pattern)
-   #return data
-   #return quote.info
+    #call elains service to find information on the asset
+    user_query = name
+    location = 'C:\\Users\\Laura\\source\\repos\\SoftwareOneWebPage-LauraElderStocks\\search_results.json'
+    infor=display_info.display_info(user_query, location)
+    #go get the data from service
+    # Opening JSON file
+    f = open(location,)
+    # returns JSON object as
+    # a dictionary
+    data = json.load(f)
+    # Iterating through the json
+    information = data['summary'] 
+    # Closing file
+    f.close()
+    return render_template('analysis.html', name =name, price = price, action= action, pattern=pattern, information=information)
+    #return data
+    #return quote.info
 
 @app.route("/quote")
 def display_quote():
@@ -91,7 +164,7 @@ def pattern_returnPage():
     # a dictionary
     data = json.load(f)
     # Iterating through the json
-    information = data['summary'] #this has changed
+    information = data['summary'] 
     # Closing file
     f.close()
     return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information)
@@ -111,7 +184,7 @@ def pattern_returnPageI():
     # a dictionary
     data = json.load(f)
     # Iterating through the json
-    information = data['summary'] #this has changed
+    information = data['summary'] 
     # Closing file
     f.close()
     return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information)
@@ -131,7 +204,7 @@ def pattern_returnPageM():
     # a dictionary
     data = json.load(f)
     # Iterating through the json
-    information = data['summary'] #this has changed
+    information = data['summary'] 
     # Closing file
     f.close()
     return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information)
@@ -151,7 +224,7 @@ def pattern_returnPageW():
     # a dictionary
     data = json.load(f)
     # Iterating through the json
-    information = data['summary'] #this has changed
+    information = data['summary'] 
     # Closing file
     f.close()
     return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information)
@@ -171,7 +244,7 @@ def pattern_returnPageH():
     # a dictionary
     data = json.load(f)
     # Iterating through the json
-    information = data['summary'] #this has changed
+    information = data['summary'] 
     # Closing file
     f.close()
     return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information)
@@ -191,7 +264,7 @@ def pattern_returnPageCRO():
     # a dictionary
     data = json.load(f)
     # Iterating through the json
-    information = data['summary'] #this has changed
+    information = data['summary'] 
     # Closing file
     f.close()
     return render_template('pn.html', patternZ = pattern_pass, signal=signal, information=information)
